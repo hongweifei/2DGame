@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "game.h": "c",
+        "sdl_image.h": "c",
+        "condition_variable": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp",
+        "cstdarg": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp"
+    }
+}
