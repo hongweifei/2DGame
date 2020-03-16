@@ -6,22 +6,24 @@
 
 #define FPS_NONE 0000
 
-class Game
+class Game  //game class
 {
 private:
     Window *window = NULL;
     Uint32 FPS = 1000/30;
     Uint32 FPS_Timer;
     bool quit = false;
-public:
+public: 
     Game(Window *window);
     ~Game();
 
-    void StartGame(void (*Render)(SDL_Renderer *renderer,const Uint8 *key_state),
-                    Uint32 game_FPS,bool swap);
+    void StartGame(void (*Render)(SDL_Renderer *renderer,const Uint8 *key_state) = NULL,
+                    Uint32 game_FPS = FPS_NONE,bool swap = true);
     void QuitGame();
 
-    void Render(bool present);
+    void Render(bool swap = true);
+
+    SDL_Renderer* GetRenderer();
 };
 
 Game::Game(Window *window)
@@ -35,7 +37,7 @@ Game::~Game()
 }
 
 void Game::StartGame(void (*Render)(SDL_Renderer *renderer,const Uint8 *key_state),
-                    const Uint32 game_FPS,bool swap)
+                    Uint32 game_FPS,bool swap)
 {
     if(game_FPS != FPS_NONE)
         this->FPS = 1000/game_FPS;
@@ -43,7 +45,7 @@ void Game::StartGame(void (*Render)(SDL_Renderer *renderer,const Uint8 *key_stat
     while (!quit)
     {
         Uint32 msg = this->window->GetMessage();
-        switch (this->window->event.type)
+        switch (this->window->event.type)//keyboard state
         {
         case SDL_QUIT:
             this->quit = true;
@@ -82,6 +84,11 @@ void Game::Render(bool swap)
 {
     if(swap)
         SDL_RenderPresent(this->window->renderer);
+}
+
+SDL_Renderer* Game::GetRenderer()
+{
+    return this->window->renderer;
 }
 
 #endif

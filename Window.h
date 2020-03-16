@@ -7,7 +7,7 @@
 #ifndef WINDOW
 #define WINDOW
 
-class Window
+class Window //window类
 {
 private:
     SDL_Window *window = NULL;
@@ -22,7 +22,7 @@ public:
 
     Uint32 GetMessage();
     //void SetWindowFPS(Uint32 window_FPS);
-    void Render(bool swap);
+    void Render(bool swap = true);
     void DestroyWindow();
 };
 

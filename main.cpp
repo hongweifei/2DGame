@@ -4,7 +4,7 @@
 #include "Object.h"
 #include "TileMap.h"
 
-#define WINDOW_WIDTH 800
+#define WINDOW_WIDTH 800 
 #define WINDOW_HEIGHT 600
 
 #define GAME_FPS 30
@@ -19,8 +19,6 @@
 #undef main
 #endif
 
-bool game_init = false;
-
 TileMap *map;
 
 Object *player;
@@ -30,28 +28,24 @@ Sprite *player_run;
 int player_way = PLAYER_WAY_RIGHT; //-1 left , 1 right
 int player_state = PLAYER_STAND; //0 stand, 1 run
 
+void GameInit(Game *game)
+{
+    map = new TileMap(game->GetRenderer(),"Map/01/01.lua");
+
+    player_stand = new Sprite("Sprite/Character/Sprite_Player.png",game->GetRenderer());
+    player_run = new Sprite("Sprite/Character/Sprite_Player.png",game->GetRenderer());
+
+    player_stand->InitSpriteRect(64,64,0,0,3,1);
+    player_run->InitSpriteRect(64,64,0,64,4,1);
+
+    player = new Object(player_stand);
+
+    player->x = 100;
+    player->y = 100;
+}
+
 void Render(SDL_Renderer *renderer,const Uint8 *key_state)
 {
-    if(!game_init)
-    {
-        map = new TileMap(renderer,"Map/01/01.lua");
-
-        player_stand = new Sprite("Sprite/Character/Sprite_Player.png",
-                                renderer,false,0,0,0,0);
-        player_run = new Sprite("Sprite/Character/Sprite_Player.png",
-                                renderer,false,0,0,0,0);
-
-        player_stand->InitSpriteRect(64,64,0,0,3,1);
-        player_run->InitSpriteRect(64,64,0,64,4,1);
-
-        player = new Object(player_stand);
-
-        player->x = 100;
-        player->y = 100;
-
-        game_init = true;
-    }
-
     player_state = PLAYER_STAND;
 
     if(key_state[SDL_SCANCODE_A])
@@ -92,17 +86,19 @@ void Render(SDL_Renderer *renderer,const Uint8 *key_state)
     else if(player_way == PLAYER_WAY_RIGHT)
         player->SetSpriteFlip(SPRITE_FLIP_NONE);
 
-    map->Render(renderer,GAME_FPS);
+    map->Render(renderer);
 
-    player->Render(renderer,GAME_FPS/6,player->x,
-                    player->y,48,48,0);
+    player->Render(renderer,player->x,
+                    player->y,48,48,0,GAME_FPS / 6);
 }
 
-int main(int argc,char *argv[])
+int main(int argc,char *argv[])//入口
 {
     Window *window = new Window("Game",WINDOW_WIDTH,WINDOW_HEIGHT);
 
     Game *game = new Game(window);
+
+    GameInit(game);
 
     game->StartGame(&Render,GAME_FPS,true); 
 
@@ -114,4 +110,5 @@ int main(int argc,char *argv[])
 
     return 0;
 }
+
 

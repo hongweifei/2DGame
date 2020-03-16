@@ -7,7 +7,7 @@
 
 #define SpriteFlip SDL_RendererFlip
 #define SPRITE_FLIP_NONE SDL_FLIP_NONE
-#define SPRITE_FLIP_HORIZONTAL SDL_FLIP_HORIZONTAL 
+#define SPRITE_FLIP_HORIZONTAL SDL_FLIP_HORIZONTAL
 #define SPRITE_FLIP_VERTICAL SDL_FLIP_VERTICAL
 
 class Sprite
@@ -27,17 +27,17 @@ public:
 
     SDL_RendererFlip flip = SPRITE_FLIP_NONE;
 
-    Sprite(const char *path,SDL_Renderer *renderer,
-            bool ColorKey,Uint8 r,Uint8 g,Uint8 b,Uint8 a);
+    Sprite(const char *path = NULL,SDL_Renderer *renderer = NULL,
+            bool ColorKey = false,Uint8 r = 0,Uint8 g = 0,Uint8 b = 0,Uint8 a = 0);
     ~Sprite();
 
     void SetTexture(const char *path,SDL_Renderer *renderer
-                    ,bool ColorKey,Uint8 r,Uint8 g,Uint8 b,Uint8 a);
+                    ,bool ColorKey = false,Uint8 r = 0,Uint8 g = 0,Uint8 b = 0,Uint8 a = 0);
 
     void InitSpriteRect(int width,int height,int begin_x,int begin_y,
-                        unsigned int n,unsigned int m);
-    void Render(SDL_Renderer *renderer,unsigned int FPS,
-                int x,int y,int width,int height,double angle);
+                        unsigned int n = 1,unsigned int m = 1);
+    void Render(SDL_Renderer *renderer,
+    int x,int y,int width,int height,double angle = 0,unsigned int FPS = 0);
 };
 
 Sprite::Sprite(const char *path,SDL_Renderer *renderer
@@ -99,8 +99,8 @@ int begin_x,int begin_y,unsigned int n,unsigned int m)//n is H , m is V
 
 }
 
-void Sprite::Render(SDL_Renderer *renderer,unsigned int FPS,int x,int y,
-                    int width,int height,double angle)
+void Sprite::Render(SDL_Renderer *renderer,int x,int y,
+                    int width,int height,double angle,unsigned int FPS)
 {
     this->rect.x = x;
     this->rect.y = y;

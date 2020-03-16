@@ -32,11 +32,11 @@ public:
 
     Sprite **sprite;
 
-    TileMap(SDL_Renderer *renderer,const char *path);
+    TileMap(SDL_Renderer *renderer,const char *path = NULL);
     ~TileMap();
 
     void LoadMap(SDL_Renderer *renderer,const char *path);
-    void Render(SDL_Renderer *renderer,unsigned int FPS);
+    void Render(SDL_Renderer *renderer,unsigned int FPS = 0);
 };
 
 TileMap::TileMap(SDL_Renderer *renderer,const char *path)
@@ -168,8 +168,8 @@ void TileMap::Render(SDL_Renderer *renderer,unsigned int FPS)
         {
             if (this->map_data[i * this->width + j] != 0)
             {
-                this->sprite[this->map_data[i * this->width + j] - 1]->Render(renderer,FPS,
-                this->tile_width * j,this->tile_height * i,this->tile_width,this->tile_height,0);
+                this->sprite[this->map_data[i * this->width + j] - 1]->Render(renderer,
+                this->tile_width * j,this->tile_height * i,this->tile_width,this->tile_height,0,FPS);
             }
             
         }
