@@ -31,7 +31,7 @@ Window::Window(const char *title,int width,int height)
     SDL_Init(SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS
             | SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
     this->window = SDL_CreateWindow(title,SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,
-                            width,height,SDL_WINDOW_SHOWN);
+                            width,height,SDL_WINDOW_SHOWN|SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
 
     this->renderer = SDL_CreateRenderer(this->window,-1,SDL_RENDERER_ACCELERATED);
     this->surface = IMG_Load("./ico.jpg");
